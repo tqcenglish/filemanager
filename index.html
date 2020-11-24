@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文件管理</title>
+    <meta charset="utf-8">
+    <link href="../base1/cockpit.css" type="text/css" rel="stylesheet">
+    <script src="../base1/cockpit.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <table class="form-table-ct">
+            <tr>
+                <td><label class="control-label" for="address">Address</label></td>
+                <td><input class="form-control" id="address" value="8.8.8.8"></td>
+            </tr>
+            <tr>
+                <td><button class="pf-c-button pf-m-primary" id="ping">Ping</button></td>
+                <td><span id="result"></span></td>
+            </tr>
+        </table>
+        <br/>
+        <pre id="output"></pre>
+    </div>
+    <br/>
+    <script src="index.js"></script>
+</body>
+</html>
+

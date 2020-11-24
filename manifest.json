@@ -1,0 +1,9 @@
+{
+    "version": 0,
+    "tools": {
+        "filemanager": {
+            "label": "FileManager",
+            "path": "index.html"
+        }
+    }
+}
