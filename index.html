@@ -5,24 +5,52 @@
     <meta charset="utf-8">
     <link href="../base1/cockpit.css" type="text/css" rel="stylesheet">
     <script src="../base1/cockpit.js"></script>
+    <script src="vue.js"></script>
 </head>
 <body>
-    <div class="container-fluid">
-        <table class="form-table-ct">
-            <tr>
-                <td><label class="control-label" for="address">Address</label></td>
-                <td><input class="form-control" id="address" value="8.8.8.8"></td>
-            </tr>
-            <tr>
-                <td><button class="pf-c-button pf-m-primary" id="ping">Ping</button></td>
-                <td><span id="result"></span></td>
-            </tr>
-        </table>
-        <br/>
-        <pre id="output"></pre>
+    <div id="app">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title" translate>上传到 Temp(只支持文本文件)</div>
+                </div>
+                <table class="form-table-ct" style="margin: 20px;">
+                    <tr>
+                        <td>
+                            <label class="btn btn-info file-input-button">
+                                <input type="file" id="upload_file" ref="upload_file"/>
+                            </label>
+                        </td>
+                        <td>
+                            <button class="pf-c-button pf-m-primary" @click="upload()">上传</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title" translate>Temp 文件列表</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6" v-for="file in files" :key='file'>
+                        <div style="margin: 20px;">
+                            <button class="pf-c-button pf-m-primary" @click="downfile(file)">下载</button>
+                            <button class="pf-c-button btn-danger" @click="removefile(file)">删除</button>
+                            <label class="control-label" style="
+                            text-overflow:ellipsis;
+                            max-width: 200px;
+                            overflow: hidden;
+                            vertical-align:top;
+                            white-space: nowrap;" translate>{{file}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <br/>
-    <script src="index.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="FileSaver.js"></script>
 </body>
 </html>
 

@@ -1,34 +1,55 @@
-const address = document.getElementById("address");
-const output = document.getElementById("output");
-const result = document.getElementById("result");
-const button = document.getElementById("ping");
 
-function ping_run() {
-    cockpit.spawn(["ping", "-c", "4", address.value])
-        .stream(ping_output)
-        .then(ping_success)
-        .catch(ping_fail);
+const maxReadSize = 50 * 1024 * 1024;
 
-    result.innerHTML = "";
-    output.innerHTML = "";
-}
+let uploadData;
+let fileName;
+let uploadFile = document.getElementById('upload_file');
+uploadFile.addEventListener('change', function () {
 
-function ping_success() {
-    result.style.color = "green";
-    result.innerHTML = "success";
-}
+});
 
-function ping_fail() {
-    result.style.color = "red";
-    result.innerHTML = "fail";
-}
+new Vue({
+    el: '#app',
+    data: {
+        files: ''
+    },
+    mounted() {
+        this.load();
+    },
+    methods: {
+        load: function () {
+            cockpit.script("ls /tmp").then((res) => {
+                this.files = res.split('\n').filter(item => item !="" && typeof item === 'string');
+            })
+        },
+        downfile: function(filename) {
+            return cockpit.file(`/tmp/${filename}`, { max_read_size: maxReadSize }).read().then((data) => {
+                let blob = new Blob([data], { type: "text/plain;charset=utf-8" });
+                saveAs(blob, `${filename}`)
+            });
+        },
+        removefile: function name(filename) {
+            cockpit.script(`rm -rf /tmp/${filename}`).then(() => {
+                this.load();
+            });
+        },
+        upload: function () {
+            let vue = this;
+            let file = this.$refs.upload_file.files[0];
+            fileName = file.name;
+            console.log(fileName);
 
-function ping_output(data) {
-    output.append(document.createTextNode(data));
-}
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                uploadData = reader.result;
 
-// Connect the button to starting the "ping" process
-button.addEventListener("click", ping_run);
-
-// Send a 'init' message.  This tells integration tests that we are ready to go
-cockpit.transport.wait(function() { });
+                cockpit.file(`/tmp/${fileName}`).replace(uploadData).then(() => {
+                    vue.load();
+                }).catch(err => {
+                    console.error(err);
+                });
+            };
+            reader.readAsText(file, 'utf-8');
+        }
+    }
+})
