@@ -23,8 +23,8 @@ new Vue({
             })
         },
         downfile: function(filename) {
-            return cockpit.file(`/tmp/${filename}`, { max_read_size: maxReadSize }).read().then((data) => {
-                let blob = new Blob([data], { type: "text/plain;charset=utf-8" });
+            return cockpit.file(`/tmp/${filename}`, { max_read_size: maxReadSize, binary: true }).read().then((data) => {
+                let blob = new Blob([data]);
                 saveAs(blob, `${filename}`)
             });
         },
@@ -41,15 +41,13 @@ new Vue({
 
             let reader = new FileReader();
             reader.onload = function (e) {
-                uploadData = reader.result;
-
-                cockpit.file(`/tmp/${fileName}`).replace(uploadData).then(() => {
+                cockpit.file(`/tmp/${fileName}`, {binary: true}).replace(new Uint8Array(reader.result)).then(() => {
                     vue.load();
                 }).catch(err => {
                     console.error(err);
                 });
             };
-            reader.readAsText(file, 'utf-8');
+            reader.readAsArrayBuffer(file);
         }
     }
 })

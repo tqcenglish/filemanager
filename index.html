@@ -9,23 +9,30 @@
 </head>
 <body>
     <div id="app">
-        <div class="container-fluid">
+        <div class="container">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="panel-title" translate>上传到 Temp(只支持文本文件)</div>
+                    <div class="panel-title" translate>上传到 Temp</div>
                 </div>
-                <table class="form-table-ct" style="margin: 20px;">
-                    <tr>
-                        <td>
-                            <label class="btn btn-info file-input-button">
-                                <input type="file" id="upload_file" ref="upload_file"/>
-                            </label>
-                        </td>
-                        <td>
-                            <button class="pf-c-button pf-m-primary" @click="upload()">上传</button>
-                        </td>
-                    </tr>
-                </table>
+                <div class="panel-body">
+                    <div class="pf-c-form pf-m-horizontal">
+                        <div class="pf-c-form__group">
+                            <div class="pf-c-form__group-label">
+                                <label class="pf-c-form__label" for="form-vertical-name">
+                                    <span class="pf-c-form__label-text">File:</span>
+                                </label>
+                            </div>
+                            <div class="pf-c-form__group-control">
+                                <input class="pf-c-form-control" type="file" id="upload_file" ref="upload_file"/>
+                            </div>
+                        </div>
+                        <div class="pf-c-form__group">
+                            <div class="pf-c-form__group-control">
+                                <button class="pf-c-button pf-m-primary" @click="upload()">上传</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="panel panel-default">
@@ -35,14 +42,17 @@
                 <div class="row">
                     <div class="col-sm-6" v-for="file in files" :key='file'>
                         <div style="margin: 20px;">
+                            <div>
+                                <label class="control-label" style="
+                                font-size: 20px;
+                                text-overflow:ellipsis;
+                                max-width: 200px;
+                                overflow: hidden;
+                                vertical-align:top;
+                                white-space: nowrap;" translate>{{file}}</label>
+                            </div>
                             <button class="pf-c-button pf-m-primary" @click="downfile(file)">下载</button>
                             <button class="pf-c-button btn-danger" @click="removefile(file)">删除</button>
-                            <label class="control-label" style="
-                            text-overflow:ellipsis;
-                            max-width: 200px;
-                            overflow: hidden;
-                            vertical-align:top;
-                            white-space: nowrap;" translate>{{file}}</label>
                         </div>
                     </div>
                 </div>
