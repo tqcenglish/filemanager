@@ -1,66 +1,21 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>文件管理</title>
+    <title>File Manager</title>
     <meta charset="utf-8">
-    <link href="../base1/cockpit.css" type="text/css" rel="stylesheet">
     <script src="../base1/cockpit.js"></script>
-    <script src="vue.js"></script>
+    <link href="./css/index.css" type="text/css" rel="stylesheet">
+    <link href="./css/element.css" type="text/css" rel="stylesheet">
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/element.js"></script>
 </head>
+
 <body>
-    <div id="app">
-        <div class="container">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="panel-title" translate>上传到 Temp</div>
-                </div>
-                <div class="panel-body">
-                    <div class="pf-c-form pf-m-horizontal">
-                        <div class="pf-c-form__group">
-                            <div class="pf-c-form__group-label">
-                                <label class="pf-c-form__label" for="form-vertical-name">
-                                    <span class="pf-c-form__label-text">File:</span>
-                                </label>
-                            </div>
-                            <div class="pf-c-form__group-control">
-                                <input class="pf-c-form-control" type="file" id="upload_file" ref="upload_file"/>
-                            </div>
-                        </div>
-                        <div class="pf-c-form__group">
-                            <div class="pf-c-form__group-control">
-                                <button class="pf-c-button pf-m-primary" @click="upload()">上传</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="panel-title" translate>Temp 文件列表</div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6" v-for="file in files" :key='file'>
-                        <div style="margin: 20px;">
-                            <div>
-                                <label class="control-label" style="
-                                font-size: 20px;
-                                text-overflow:ellipsis;
-                                max-width: 200px;
-                                overflow: hidden;
-                                vertical-align:top;
-                                white-space: nowrap;" translate>{{file}}</label>
-                            </div>
-                            <button class="pf-c-button pf-m-primary" @click="downfile(file)">下载</button>
-                            <button class="pf-c-button btn-danger" @click="removefile(file)">删除</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="app" v-cloak>
+       <index></index> 
     </div>
-    <script type="text/javascript" src="index.js"></script>
-    <script type="text/javascript" src="FileSaver.js"></script>
+    <script type="module" src="index.js"></script>
 </body>
-</html>
 
+</html>

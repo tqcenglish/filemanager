@@ -1,0 +1,8 @@
+
+#app {
+    margin: -8px;
+}
+
+[v-cloak] {
+    display: none;
+}
