@@ -6,9 +6,27 @@ let fileName;
 export default {
     template: `
 <div>
-    <input type="file"  ref="upload">
-    </input>
-    <el-button style="margin-left: 10px;" size="small" type="success" @click="upload">上传到服务器</el-button>
+    <el-row :gutter="10">
+        <el-col :span="8">
+            <el-upload
+                drag
+                ref="upload"
+                :auto-upload="false"
+                action="">
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <template #tip>
+                    <div class="el-upload__tip">
+                        <h3>上传到 <span style="color:red;">/tmp</span> 目录</h3>
+                    </div>
+                </template>
+            </el-upload>
+        </el-col>
+        <el-col :span="8" :offset="4">
+            <el-button style="margin-left: 10px;" size="small" type="success" @click="upload">上传到服务器</el-button>
+        </el-col>
+    </el-row>
+    
 </div>
 `,
     data() {
@@ -19,12 +37,12 @@ export default {
     },
     methods: {
         upload: function () {
-            if(this.$refs.upload.files.length == 0){
+            if(this.$refs.upload.uploadFiles.length == 0){
                 this.$message.error("选择文件");
                 return;
             }
             let vue = this;
-            let file = this.$refs.upload.files[0];
+            let file = this.$refs.upload.uploadFiles[0];
             fileName = file.name;
             console.log(fileName);
 
@@ -37,7 +55,7 @@ export default {
                     vue.$message.error("上传失败");
                 });
             };
-            reader.readAsArrayBuffer(file);
+            reader.readAsArrayBuffer(file.raw);
         }
     }
 

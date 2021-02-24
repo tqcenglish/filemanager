@@ -3,12 +3,16 @@ import list from './list.js';
 
 export default {
   template: `
-<el-row>
-  <el-tabs type="border-card" v-model="activeTabName">
-  <el-tab-pane v-for="tab in tabs" :label="tab.show" :key="tab.name" :name="tab.name"></el-tab-pane>
-  <component v-bind:is="activeTabName" v-bind:pluginName="name"></component>
-  </el-tabs>
-</el-row>
+<div>
+  <el-row :gutter="20" id="main">
+    <el-col :span="24">
+      <el-tabs type="border-card" v-model="activeTabName">
+      <el-tab-pane v-for="tab in tabs" :label="tab.show" :key="tab.name" :name="tab.name"></el-tab-pane>
+      <component v-bind:is="activeTabName" v-bind:pluginName="name"></component>
+      </el-tabs>
+    </el-col>
+  </el-row>
+</div>
 `,
   data() {
     return {
