@@ -92,7 +92,7 @@ export default {
         },
         downfile: function (file) {
             return cockpit.file(`${this.dir}${file.name}`, { max_read_size: maxReadSize, binary: true }).read().then((data) => {
-                let blob = new Blob([data]);
+                let blob = new Blob([data], {type: 'application/octet-stream'});
                 saveAs(blob, `${file.name}`)
                 this.$message("下载成功");
             }).catch(() => {
